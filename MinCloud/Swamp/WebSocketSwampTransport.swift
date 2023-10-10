@@ -69,7 +69,7 @@ class WebSocketSwampTransport: SwampTransport {
 
 extension WebSocketSwampTransport: WebSocketDelegate {
     
-    func didReceive(event: WebSocketEvent, client: WebSocket) {
+    func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
         switch event {
             case .connected(let headers):
                 printDebugInfo("websocket is connected: \(headers)")
@@ -99,6 +99,8 @@ extension WebSocketSwampTransport: WebSocketDelegate {
                 break
             case .error(let error):
                 delegate?.swampTransportConnectFailed(error as NSError?, reason: nil)
-            }
+            case .peerClosed:
+                break
+        }
     }
 }
